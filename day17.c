@@ -1,0 +1,67 @@
+/*
+141. Linked List Cycle
+Solved
+Easy
+Topics
+Companies
+Given head, the head of a linked list, determine if the linked list has a cycle in it.
+
+There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.
+
+Return true if there is a cycle in the linked list. Otherwise, return false.
+
+ 
+
+Example 1:
+
+
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+Example 2:
+
+
+Input: head = [1,2], pos = 0
+Output: true
+Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
+Example 3:
+
+
+Input: head = [1], pos = -1
+Output: false
+Explanation: There is no cycle in the linked list.*/
+
+
+//using floyd's tortise and hare algorithm
+
+  //Definition for singly-linked list.
+  struct ListNode {
+      int val;
+      struct ListNode *next;
+    };
+bool hasCycle(struct ListNode *head) 
+{
+     if (head == NULL || head->next == NULL) {
+        return false; // No cycle if the list is empty or has only one node.
+    }
+
+    struct ListNode* slow = head;
+    struct ListNode* fast = head;
+
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;         // Move one step at a time.
+        fast = fast->next->next;   // Move two steps at a time.
+
+        if (slow == fast) {
+            return true; // If they meet, there's a cycle.
+        }
+    }
+
+    return false; // If we reach the end of the list, there's no cycle.
+    
+}
+
+
+// this can also be done using nested forloops but not very efficent using this algorithm we can do in 0(n) time but in nested loop it will take o(n2) to complete the task
+
+
